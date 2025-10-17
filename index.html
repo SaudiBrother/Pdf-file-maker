@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pro Image → PDF Converter</title>
+  <meta name="description" content="Konverter gambar ke PDF profesional — drag & drop, reorder, rotasi, opsi ukuran halaman, orientasi, margin, kualitas, penyesuaian gambar, dan penomoran halaman."/>
+  
+  <!-- Font & Library -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pica/9.0.1/pica.min.js"></script>
+
+  <!-- Link ke file CSS eksternal -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="app" role="application" aria-label="Image to PDF Converter">
+      <!-- ================= LEFT PANEL ================= -->
+      <section class="panel" aria-labelledby="panelTitle">
+        <div class="brand" id="panelTitle">
+          <div class="logo">IP</div>
+          <div>
+            <h1>Image → PDF Pro</h1>
+            <p>Konverter canggih dengan kustomisasi penuh.</p>
+          </div>
+        </div>
+
+        <div class="hud">
+          <div class="stat"><strong id="count">0</strong><small>Gambar</small></div>
+          <div class="stat"><strong id="totalSize">0 KB</strong><small>Total Ukuran</small></div>
+          <div class="stat"><strong id="pages">A4</strong><small>Ukuran Halaman</small></div>
+        </div>
+
+        <div class="sep"></div>
+
+        <!-- OPTIONS -->
+        <div class="options">
+          <div class="option-group">
+            <label class="small">Pengaturan Halaman</label>
+            <div class="row">
+              <select id="pageSize" aria-label="Pilih ukuran halaman">
+                <option value="a4">A4 (210 × 297 mm)</option>
+                <option value="letter">Letter (216 × 279 mm)</option>
+                <option value="custom">Custom (mm)</option>
+              </select>
+              <select id="orientation" aria-label="Pilih orientasi" style="width:140px;">
+                <option value="portrait">Portrait</option>
+                <option value="landscape">Landscape</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="customSizeRow" style="display:none;" class="option-group">
+            <div class="row">
+              <input id="customW" type="number" min="1" placeholder="Lebar (mm)" />
+              <input id="customH" type="number" min="1" placeholder="Tinggi (mm)" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="option-group">
+              <label class="small">Margin (mm)</label>
+              <input id="margin" type="number" min="0" max="100" value="10" />
+            </div>
+            <div class="option-group">
+              <label class="small">Penyesuaian Gambar</label>
+              <select id="imageFit" aria-label="Pilih cara penyesuaian gambar">
+                <option value="fit">Fit (Jaga Rasio)</option>
+                <option value="stretch">Stretch (Penuhi)</option>
+                <option value="cover">Cover (Tutup Area)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <label class="small">Kualitas JPG — <span id="qualityValue">0.92</span></label>
+            <input id="quality" type="range" min="0.1" max="1" step="0.01" value="0.92" />
+          </div>
+
+          <div class="option-group">
+            <label class="small">Opsi Tambahan</label>
+            <div class="checkbox-group">
+              <input type="checkbox" id="pageNumbers">
+              <label for="pageNumbers">Tambahkan Nomor Halaman</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="preservePng">
+              <label for="preservePng">Pertahankan Transparansi PNG</label>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:auto; display:flex; flex-direction: column; gap: 8px;">
+          <div class="hint">Tips: Tarik gambar untuk mengubah urutan. Gunakan ikon pada gambar untuk pratinjau, rotasi, atau hapus.</div>
+          <button class="btn danger small" id="removeAllBtn">
+            🗑️ Hapus Semua
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= WORKSPACE ================= -->
+      <section class="workspace" aria-labelledby="workspaceTitle">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 id="workspaceTitle" style="margin:0; font-size:18px;">Workspace</h2>
+          <button class="btn primary small" id="uploadBtn">📁 Pilih Gambar</button>
+        </div>
+
+        <input type="file" id="fileInput" accept="image/png, image/jpeg, image/webp" multiple>
+        <div id="drop-zone">
+          <p><strong>Seret & Jatuhkan</strong> gambar di sini</p>
+          <span class="hint">(PNG, JPG, WEBP)</span>
+        </div>
+
+        <div class="thumb-list" id="thumbs"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top: auto;">
+          <button class="btn primary" id="createBtn" disabled>📄 Buat PDF</button>
+          <div class="progress-wrap" style="flex:1;">
+            <div class="progress"><i id="progressBar"></i></div>
+            <div class="status-text" id="statusText">Menunggu gambar...</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal dan Toast -->
+  <div class="modal-overlay" id="imageModal">
+    <div class="modal-content">
+      <img src="" alt="Image Preview" id="modalImg">
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Script JS eksternal -->
+  <script src="js/script.js"></script>
+</body>
+</html>
