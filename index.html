@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pro Image → PDF Converter</title>
-  <meta name="description" content="Konverter gambar ke PDF profesional — drag & drop, reorder, rotasi, opsi ukuran halaman, orientasi, margin, kualitas, penyesuaian gambar, dan penomoran halaman."/>
+  <meta name="description" content="Professional image to PDF converter — drag & drop, reorder, rotation, page size options, orientation, margins, quality, image adjustment, and page numbering."/>
   
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,8 +17,8 @@
 <body>
   <div class="processing-overlay" id="processingOverlay">
     <div class="spinner"></div>
-    <p>Memproses PDF Anda...</p>
-    <span id="overlayStatus">Mempersiapkan...</span>
+    <p>Processing your PDF...</p>
+    <span id="overlayStatus">Preparing...</span>
   </div>
 
   <div class="modal-overlay" id="imageModal">
@@ -37,26 +37,26 @@
           </div>
           <div>
             <h1>Image → PDF Pro</h1>
-            <p>Konverter canggih dengan kustomisasi penuh.</p>
+            <p>Advanced converter with full customization.</p>
           </div>
         </div>
 
         <div class="hud">
-          <div class="stat"><strong id="count">0</strong><small>Gambar</small></div>
-          <div class="stat"><strong id="totalSize">0 KB</strong><small>Total Ukuran</small></div>
-          <div class="stat"><strong id="pages">A4</strong><small>Ukuran Halaman</small></div>
+          <div class="stat"><strong id="count">0</strong><small>Images</small></div>
+          <div class="stat"><strong id="totalSize">0 KB</strong><small>Total Size</small></div>
+          <div class="stat"><strong id="pages">A4</strong><small>Page Size</small></div>
         </div>
 
         <div class="options">
           <div class="option-group">
-            <label class="small">Pengaturan Halaman</label>
+            <label class="small">Page Settings</label>
             <div class="row">
-              <select id="pageSize" aria-label="Pilih ukuran halaman">
+              <select id="pageSize" aria-label="Select page size">
                 <option value="a4">A4 (210 × 297 mm)</option>
                 <option value="letter">Letter (216 × 279 mm)</option>
                 <option value="custom">Custom (mm)</option>
               </select>
-              <select id="orientation" aria-label="Pilih orientasi" style="width:150px;">
+              <select id="orientation" aria-label="Select orientation" style="width:150px;">
                 <option value="portrait">Portrait</option>
                 <option value="landscape">Landscape</option>
               </select>
@@ -66,12 +66,12 @@
           <div id="customSizeRow" class="option-group" style="display:none;">
             <div class="row">
               <div>
-                <label for="customW" class="small">Lebar (mm)</label>
-                <input id="customW" type="number" min="1" placeholder="Lebar" />
+                <label for="customW" class="small">Width (mm)</label>
+                <input id="customW" type="number" min="1" placeholder="Width" />
               </div>
               <div>
-                <label for="customH" class="small">Tinggi (mm)</label>
-                <input id="customH" type="number" min="1" placeholder="Tinggi" />
+                <label for="customH" class="small">Height (mm)</label>
+                <input id="customH" type="number" min="1" placeholder="Height" />
               </div>
             </div>
           </div>
@@ -82,38 +82,38 @@
               <input id="margin" type="number" min="0" max="100" value="10" />
             </div>
             <div class="option-group">
-              <label class="small" for="imageFit">Penyesuaian Gambar</label>
-              <select id="imageFit" aria-label="Pilih cara penyesuaian gambar">
-                <option value="fit">Fit (Jaga Rasio)</option>
-                <option value="stretch">Stretch (Penuhi)</option>
-                <option value="cover">Cover (Tutup Area)</option>
+              <label class="small" for="imageFit">Image Fit</label>
+              <select id="imageFit" aria-label="Select image fitting method">
+                <option value="fit">Fit (Keep Ratio)</option>
+                <option value="stretch">Stretch (Fill)</option>
+                <option value="cover">Cover (Cover Area)</option>
               </select>
             </div>
           </div>
 
           <div class="option-group">
-            <label class="small" for="quality">Kualitas JPG — <span id="qualityValue">0.92</span></label>
+            <label class="small" for="quality">JPG Quality — <span id="qualityValue">0.92</span></label>
             <input id="quality" type="range" min="0.1" max="1" step="0.01" value="0.92" />
           </div>
 
           <div class="option-group">
-            <label class="small">Opsi Tambahan</label>
+            <label class="small">Additional Options</label>
             <div class="checkbox-group">
               <input type="checkbox" id="pageNumbers">
-              <label for="pageNumbers">Tambahkan Nomor Halaman</label>
+              <label for="pageNumbers">Add Page Numbers</label>
             </div>
             <div class="checkbox-group">
               <input type="checkbox" id="preservePng">
-              <label for="preservePng">Pertahankan Transparansi PNG</label>
+              <label for="preservePng">Preserve PNG Transparency</label>
             </div>
           </div>
         </div>
 
         <div class="footer-actions">
-          <div class="hint">Tips: Tarik gambar untuk mengubah urutan.</div>
+          <div class="hint">Tip: Drag images to reorder.</div>
           <button class="btn danger small" id="removeAllBtn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-            Hapus Semua
+            Remove All
           </button>
         </div>
       </section>
@@ -123,7 +123,7 @@
           <h2 id="workspaceTitle">Workspace</h2>
           <button class="btn primary small" id="uploadBtn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path><path d="M10 9a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1H8a1 1 0 110-2h1v-1a1 1 0 011-1z"></path></svg>
-            Pilih Gambar
+            Select Images
           </button>
         </div>
 
@@ -132,7 +132,7 @@
         <div class="thumb-container">
           <div id="drop-zone">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l-3 3m3-3l3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"></path></svg>
-            <p><strong>Seret & Jatuhkan</strong> gambar di sini</p>
+            <p><strong>Drag & Drop</strong> images here</p>
             <span class="hint">(PNG, JPG, WEBP)</span>
           </div>
 
@@ -142,10 +142,10 @@
         <div class="workspace-footer">
           <button class="btn primary large" id="createBtn" disabled>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-            Buat PDF
+            Create PDF
           </button>
           <div class="progress-wrap">
-            <div class="status-text" id="statusText">Menunggu gambar...</div>
+            <div class="status-text" id="statusText">Waiting for images...</div>
             <div class="progress">
               <i id="progressBar"></i>
             </div>
@@ -157,4 +157,4 @@
 
   <script src="js/script.js"></script>
 </body>
-</html>
+    </html>
