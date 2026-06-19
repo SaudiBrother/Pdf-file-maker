@@ -3,6 +3,10 @@
    Fonts: Space Grotesk · Inter · JetBrains Mono
 ═══════════════════════════════════════════════ */
 
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* ── Variables: Dark Theme (default) ── */
 :root {
   /* Background layers */
